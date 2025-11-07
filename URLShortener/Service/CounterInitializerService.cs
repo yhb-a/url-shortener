@@ -2,15 +2,15 @@
 using Microsoft.Extensions.Hosting;
 using URLShortener.Repository;
 
-namespace URLShortener
+namespace URLShortener.Service
 {
     // This class implements an IHostedService, which means it’s a background service that runs automatically when the application starts up and stops when the host shuts down.
     public class CounterInitializerService : IHostedService 
     {
-        private readonly IGlobalCounter globalCounter;
+        private readonly IGlobalCounterService globalCounter;
         private readonly IServiceScopeFactory scopeFactory;
 
-        public CounterInitializerService(IServiceScopeFactory serviceScopeFactory, IGlobalCounter globalCounter)
+        public CounterInitializerService(IServiceScopeFactory serviceScopeFactory, IGlobalCounterService globalCounter)
         {
             this.scopeFactory = serviceScopeFactory;
             this.globalCounter = globalCounter;

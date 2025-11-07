@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using URLShortener;
 using URLShortener.Repository;
 using URLShortener.Service;
 
@@ -19,8 +18,7 @@ builder.Services.AddScoped<IURLRepository, URLRepository>();
 
 // Services
 builder.Services.AddScoped<IURLService, URLService>();
-builder.Services.AddSingleton<IGlobalCounter, GlobalCounter>();
-
+builder.Services.AddSingleton<IGlobalCounterService, GlobalCounterService>();
 builder.Services.AddHostedService<CounterInitializerService>();
 
 var app = builder.Build();

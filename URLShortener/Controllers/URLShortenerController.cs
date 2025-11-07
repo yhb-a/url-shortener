@@ -16,7 +16,7 @@ namespace URLShortener.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Shorten([FromBody] RequestModel request)
+        public async Task<IActionResult> ShortenLongURL([FromBody] RequestModel request)
         {
             try
             {
@@ -37,6 +37,8 @@ namespace URLShortener.Controllers
             try
             {
                 var result = await this.service.GetLongUrl(shortCode);
+
+                await this.service.IncrementAccessCount(shortCode);
 
                 return Redirect(result);
             }
@@ -70,11 +72,11 @@ namespace URLShortener.Controllers
         }
 
         [HttpPut("{shortCode}")]
-        public async Task<IActionResult> UpdateShortCode(string shortCode, [FromBody] RequestModel request)
+        public async Task<IActionResult> UpdateLongURL(string shortCode, [FromBody] RequestModel request)
         {
             try
             {
-                await this.service.Update(shortCode, request.Url);
+                await this.service.UpdateLongUrl(shortCode, request.Url);
 
                 return Ok();
             }
@@ -85,6 +87,25 @@ namespace URLShortener.Controllers
             catch (Exception)
             {
                 return BadRequest($"Error updating url for shortCode: {shortCode}");
+            }
+        }
+
+        [HttpGet("{shortCode}/stats")]
+        public async Task<IActionResult> GetStatistics(string shortCode)
+        {
+            try
+            {
+                var accessCount = await this.service.GetAccessCount(shortCode);
+
+                return Ok(accessCount);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return BadRequest($"Error fetching access count for shortCode: {shortCode}");
             }
         }
 

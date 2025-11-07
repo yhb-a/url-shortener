@@ -3,10 +3,6 @@ using URLShortener.Models;
 
 namespace URLShortener.Repository
 {
-    // Primary keys are indexed already.
-    // A database index is like the index in a book.
-    // Without Index -> Scan every row
-    // With Index -> Jump directly to that row.
     public class URLRepository : IURLRepository
     {
         private readonly URLDbContext context;
@@ -64,7 +60,7 @@ namespace URLShortener.Repository
             await this.context.SaveChangesAsync();
         }
 
-        public async Task Update(string shortCode, string longUrl)
+        public async Task UpdateLongUrl(string shortCode, string longUrl)
         {
             var entityToUpdate = await this.context.URLs.FirstOrDefaultAsync(entity => entity.ShortCode == shortCode);
 
@@ -74,7 +70,36 @@ namespace URLShortener.Repository
             }
 
             entityToUpdate.LongUrl = longUrl;
+            entityToUpdate.UpdatedAt = DateTime.UtcNow;
+
             await this.context.SaveChangesAsync();
         }
+
+        public async Task UpdateAccessCount(string shortCode)
+        {
+            var entityToUpdate = await this.context.URLs.FirstOrDefaultAsync(entity => entity.ShortCode == shortCode);
+
+            if (entityToUpdate == null)
+            {
+                throw new NotFoundException($"short code: {shortCode} was not found");
+            }
+
+            entityToUpdate.AccessCount = entityToUpdate.AccessCount + 1;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetAccessCount(string shortCode)
+        {
+            var result = await this.context.URLs.FirstOrDefaultAsync(entity => entity.ShortCode == shortCode);
+
+            if (result == null)
+            {
+                throw new NotFoundException($"access count for short code: {shortCode} was not found");
+            }
+
+            return result.AccessCount;
+        }
+
     }
 }

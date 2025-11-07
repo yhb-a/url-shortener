@@ -1,16 +1,17 @@
 ﻿using URLShortener.Models;
 using URLShortener.Repository;
+using URLShortener.Utilities;
 
 namespace URLShortener.Service
 {
     public class URLService : IURLService
     {
         IURLRepository uRLRepository;
-        IGlobalCounter globalCounter; 
+        IGlobalCounterService globalCounter; 
 
         public URLService(
             IURLRepository uRLRepository, 
-            IGlobalCounter globalCounter)
+            IGlobalCounterService globalCounter)
         {
             this.uRLRepository = uRLRepository;
             this.globalCounter = globalCounter;
@@ -45,9 +46,19 @@ namespace URLShortener.Service
             await this.uRLRepository.Delete(shortCode);
         }
 
-        public async Task Update(string shortCode, string longURL)
+        public async Task UpdateLongUrl(string shortCode, string longURL)
         {
-            await this.uRLRepository.Update(shortCode, longURL);
+            await this.uRLRepository.UpdateLongUrl(shortCode, longURL);
+        }
+
+        public async Task IncrementAccessCount(string shortCode)
+        {
+            await this.uRLRepository.UpdateAccessCount(shortCode);
+        }
+
+        public async Task<int> GetAccessCount(string shortCode)
+        {
+            return await this.uRLRepository.GetAccessCount(shortCode);
         }
 
         public void DeleteAll()

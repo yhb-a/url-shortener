@@ -7,7 +7,9 @@ namespace URLShortener.Service
         Task<string> ShortenCode(string longURL);
         Task<string> GetLongUrl(string shortCode);
         Task Delete(string shortCode);
-        Task Update(string shortCode, string longURL);
+        Task UpdateLongUrl(string shortCode, string longURL);
+        Task IncrementAccessCount(string shortCode);
+        Task<int> GetAccessCount(string  shortCode);
         void DeleteAll();
     }
 }

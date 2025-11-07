@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.Metrics;
 using URLShortener.Repository;
 
-namespace URLShortener
+namespace URLShortener.Service
 {
-    public interface IGlobalCounter
+    public interface IGlobalCounterService
     {
         void SetCounter(int latestId);
         void Increment();

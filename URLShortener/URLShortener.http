@@ -10,16 +10,8 @@ Accept: application/json
    "url": "https://www.netflix.com/"
 }
 
-###
-POST {{URLShortener_HostAddress}}
-Content-Type: application/json
-Accept: application/json
-{
-   "url": "example.com"
-}
-
 ### 
-GET {{URLShortener_HostAddress}}/1
+GET {{URLShortener_HostAddress}}/9
 
 ### Delete given short code
 DELETE {{URLShortener_HostAddress}}/3
@@ -34,3 +26,6 @@ Accept: application/json
 {
    "url": "https://www.google.com"
 }
+
+###
+GET {{URLShortener_HostAddress}}/9/stats

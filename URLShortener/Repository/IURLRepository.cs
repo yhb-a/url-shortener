@@ -9,6 +9,8 @@ namespace URLShortener.Repository
         Task<int> GetLatestId();
         void DeleteAll();
         Task Delete(string shortCode);
-        Task Update(string shortCode, string longUrl);
+        Task UpdateLongUrl(string shortCode, string longUrl);
+        Task UpdateAccessCount(string shortCode);
+        Task<int> GetAccessCount(string shortCode);
     }
 }

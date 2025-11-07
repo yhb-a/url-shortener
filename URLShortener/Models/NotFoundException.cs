@@ -1,4 +1,4 @@
-﻿namespace URLShortener
+﻿namespace URLShortener.Models
 {
     public class NotFoundException : Exception
     {

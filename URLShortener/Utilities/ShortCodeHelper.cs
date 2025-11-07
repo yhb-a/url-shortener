@@ -1,7 +1,7 @@
 ﻿using SimpleBase;
 using System.Text;
 
-namespace URLShortener
+namespace URLShortener.Utilities
 {
     public static class ShortCodeHelper
     {

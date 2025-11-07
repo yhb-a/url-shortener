@@ -1,9 +1,9 @@
 ﻿using System.Formats.Asn1;
 using URLShortener.Repository;
 
-namespace URLShortener
+namespace URLShortener.Service
 {
-    public class GlobalCounter : IGlobalCounter
+    public class GlobalCounterService : IGlobalCounterService
     {
         private int counter = 1;
 

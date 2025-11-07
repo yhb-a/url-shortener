@@ -55,6 +55,6 @@ public class URLDbContext : DbContext
         // Call the base method to ensure any default behavior is applied
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Url>().HasIndex(entity => entity.ShortCode);
+        modelBuilder.Entity<Url>().HasIndex(entity => entity.ShortCode);        
     }
 }
